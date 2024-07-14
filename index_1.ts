@@ -1,5 +1,3 @@
-Original JS SCRIPT to debbug
-
 const Menu = [
   {name : "Margherita" , price : 2.50},
   {name : "Sicilan" , price : 6.00},
@@ -10,7 +8,8 @@ const Menu = [
   {name : "Tunez" , price : 10.00}
 ]
 
-const CashInRegister = 100;
+let CashInRegister = 100;
+let NextOrderId = 1;
 const OrderQueue = [];
 
 /*
@@ -31,9 +30,15 @@ function AddNewPizza(PizzaObj) {
   (e.g. { pizza: selectedPizzaObjectFromStepl, status: "ordered" }) 
   4. returns the new order object (just in case we need it later)
 */
-const NextOrderId = 1;
+
 function PlaceOrder(PizzaName) {
   const SelectedPizza = Menu.find(PizzaObj => PizzaObj.name === PizzaName)
+  // if the pizza is not available in the menu then return an error message
+  //  i could ve used if (SelectedPizza === undefined) but i prefer to use the below
+  if (!SelectedPizza) {
+    console.error(`${PizzaName} is not available in the menu`)
+    return
+  }
   CashInRegister += SelectedPizza.price
   const NewOrder = {
     Id: NextOrderId++,
@@ -55,7 +60,6 @@ write another utility function, completeOrder, that takes an orderId as a parame
  You can use a global ‘nextOrderId' variable and increment it every time a new order is created to
  simulate real IDs being managed for us by a database.
 */
-
 
 function CompleteOrder(OrderId) {
   const Order = OrderQueue.find(Order => Order.Id === OrderId)
