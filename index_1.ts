@@ -1,24 +1,29 @@
-const Menu = [
-  {name : "Margherita" , price : 2.50},
-  {name : "Sicilan" , price : 6.00},
-  {name : "Hawaiian" , price : 7.00},
-  {name : "Quatro formaggi" , price : 7.50},
-  { name: "Maltese", price: 7.50 },
-  {name : "Frutti di mare" , price : 9.50},
-  {name : "Tunez" , price : 10.00}
-]
+type Pizza = {
+  name: string,
+  price: number;
+};
 
-let CashInRegister = 100;
-let NextOrderId = 1;
-const OrderQueue = [];
+const Menu = [
+  { name: "Margherita", price: 2.50 },
+  { name: "Sicilan", price: 6.00 },
+  { name: "Hawaiian", price: 7.00 },
+  { name: "Quatro formaggi", price: 7.50 },
+  { name: "Maltese", price: 7.50 },
+  { name: "Frutti di mare", price: 9.50 },
+  { name: "Tunez", price: 10.00 }
+];
+
+let cashInRegister = 100;
+let nextOrderId = 1;
+const orderQueue = [];
 
 /*
   challenge 1 : 
   Add a utility function to add a new pizza to the menu
 */
 
-function AddNewPizza(PizzaObj) {
-  Menu.push(PizzaObj); 
+function addNewPizza(pizzaObj: Pizza) {
+  Menu.push(pizzaObj);
 }
 
 /*
@@ -31,22 +36,22 @@ function AddNewPizza(PizzaObj) {
   4. returns the new order object (just in case we need it later)
 */
 
-function PlaceOrder(PizzaName) {
-  const SelectedPizza = Menu.find(PizzaObj => PizzaObj.name === PizzaName)
+function placeOrder(pizzaName: string) {
+  const selectedPizza = Menu.find(pizzaObj => pizzaObj.name === pizzaName);
   // if the pizza is not available in the menu then return an error message
-  //  i could ve used if (SelectedPizza === undefined) but i prefer to use the below
-  if (!SelectedPizza) {
-    console.error(`${PizzaName} is not available in the menu`)
-    return
+  //  i could ve used if (selectedPizza === undefined) but i prefer to use the below
+  if (!selectedPizza) {
+    console.error(`${pizzaName} is not available in the menu`);
+    return;
   }
-  CashInRegister += SelectedPizza.price
+  cashInRegister += selectedPizza.price;
   const NewOrder = {
-    Id: NextOrderId++,
-    Pizza: SelectedPizza,
+    id: nextOrderId++,
+    pizza: selectedPizza,
     status: "Ordered"
-  }
-  OrderQueue.push(NewOrder)
-  return NewOrder
+  };
+  orderQueue.push(NewOrder);
+  return NewOrder;
 }
 
 /*
@@ -61,21 +66,33 @@ write another utility function, completeOrder, that takes an orderId as a parame
  simulate real IDs being managed for us by a database.
 */
 
-function CompleteOrder(OrderId) {
-  const Order = OrderQueue.find(Order => Order.Id === OrderId)
-  Order.status = "Completed"
+function completeOrder(orderId: number) {
+  const order = orderQueue.find(order => order.id === orderId);
+  order.status = "Completed";
   return Order;
 
 }
 
-AddNewPizza({name : "AllMeat" , price : 10.00})
-AddNewPizza({name : "Mexcican" , price : 8.00})
-AddNewPizza({ name: "Vegetarian", price: 4.00 })
+addNewPizza({ name: "AllMeat", price: 10.00 });
+addNewPizza({ name: "Mexcican", price: 8.00 });
+addNewPizza({ name: "Vegetarian", price: 4.00 });
 
-PlaceOrder("AllMeat")
-CompleteOrder("1")
+placeOrder("AllMeat");
+completeOrder(1);
 
-console.log("Menu", Menu)
-console.log("Cash in the register", CashInRegister)
-console.log("Order Queue", OrderQueue)
+console.log("Menu", Menu);
+console.log("Cash in the register", cashInRegister);
+console.log("Order Queue", orderQueue)
 
+/*
+  Challenge 4
+  1. Create a Pizza object type :
+    it should include name and a price property
+*/
+
+/*
+  Challenge 5 
+  1. Teach TS that the pizzaObj is supposed to be a pizza type
+  2. look through the code to see if there are any new TS warnings to deal with
+  3. fix em !
+*/

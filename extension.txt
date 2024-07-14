@@ -1,0 +1,9 @@
+code Runner
+Dim Night
+Error Lens
+live server
+Material icon theme
+Pretty Typescript Errors
+Quokka.js
+Polacode
+Prettier Code formatter
