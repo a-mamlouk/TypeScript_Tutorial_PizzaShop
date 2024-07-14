@@ -20,7 +20,7 @@ type Person = {
   adress?: Adress;
 };
 
-let person: Person = {
+let person1: Person = {
   name: "Joe",
   age: 42,
   isStudent: false,
@@ -38,6 +38,10 @@ let person2: Person = {
   isStudent: false, // was bugging : misswrote it : isstudent
 };
 
+let people: Person[] = [person1, person2];
+
 function displayInfo(person) {
-  console.log(`${person} lives at ${person.adress.street}`);
+  console.log(`${person.name} lives at ${person.adress?.street}`);
 }
+
+displayInfo(person1);

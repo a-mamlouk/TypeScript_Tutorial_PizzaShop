@@ -3,6 +3,19 @@ type Pizza = {
   price: number;
 };
 
+type Order = {
+  id: number;
+  pizza: Pizza;
+  status: string;
+};
+
+/*
+  Challenge 6 :
+  1. Add an order type.
+    It should have "id" , "pizza" and "status" properties
+    Look through the code f ou need a reminder as to what data types those should be
+*/
+
 const Menu = [
   { name: "Margherita", price: 2.50 },
   { name: "Sicilan", price: 6.00 },
@@ -15,7 +28,7 @@ const Menu = [
 
 let cashInRegister = 100;
 let nextOrderId = 1;
-const orderQueue = [];
+const orderQueue: Order[] = [];
 
 /*
   challenge 1 : 
@@ -66,10 +79,20 @@ write another utility function, completeOrder, that takes an orderId as a parame
  simulate real IDs being managed for us by a database.
 */
 
+
+/*
+  Challenge 7 :
+    1. fix the warning below by handling the sad path scenario
+*/
+
 function completeOrder(orderId: number) {
   const order = orderQueue.find(order => order.id === orderId);
+  if (!order) {
+    console.error(`${orderId} was not found in the order queue`);
+    return;
+  }
   order.status = "Completed";
-  return Order;
+  return order;
 
 }
 
