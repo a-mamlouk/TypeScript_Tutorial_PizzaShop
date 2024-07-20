@@ -1,12 +1,17 @@
 type Pizza = {
+  id: number
   name: string,
   price: number;
 };
-
+/*
+  challenge 8 :
+  using literal tyes and unions, update the Order status so that
+  it can only ever be "ordered" or "completed"
+*/
 type Order = {
   id: number;
   pizza: Pizza;
-  status: string;
+  status: "ordered" | "completed";
 };
 
 /*
@@ -16,14 +21,14 @@ type Order = {
     Look through the code f ou need a reminder as to what data types those should be
 */
 
-const Menu = [
-  { name: "Margherita", price: 2.50 },
-  { name: "Sicilan", price: 6.00 },
-  { name: "Hawaiian", price: 7.00 },
-  { name: "Quatro formaggi", price: 7.50 },
-  { name: "Maltese", price: 7.50 },
-  { name: "Frutti di mare", price: 9.50 },
-  { name: "Tunez", price: 10.00 }
+const Menu: Pizza[] = [
+  { id:1, name: "Sicilan", price: 6.00 },
+  { id:2, name: "Margherita", price: 2.50 },
+  { id:3, name: "Hawaiian", price: 7.00 },
+  { id:4, name: "Quatro formaggi", price: 7.50 },
+  { id:5, name: "Maltese", price: 7.50 },
+  { id:6, name: "Frutti di mare", price: 9.50 },
+  { id:7, name: "Tunez", price: 10.00 }
 ];
 
 let cashInRegister = 100;
@@ -58,13 +63,13 @@ function placeOrder(pizzaName: string) {
     return;
   }
   cashInRegister += selectedPizza.price;
-  const NewOrder = {
+  const newOrder: Order= {
     id: nextOrderId++,
     pizza: selectedPizza,
-    status: "Ordered"
+    status: "ordered"
   };
-  orderQueue.push(NewOrder);
-  return NewOrder;
+  orderQueue.push(newOrder);
+  return newOrder;
 }
 
 /*
@@ -91,14 +96,14 @@ function completeOrder(orderId: number) {
     console.error(`${orderId} was not found in the order queue`);
     return;
   }
-  order.status = "Completed";
+  order.status = "completed";
   return order;
 
 }
 
-addNewPizza({ name: "AllMeat", price: 10.00 });
-addNewPizza({ name: "Mexcican", price: 8.00 });
-addNewPizza({ name: "Vegetarian", price: 4.00 });
+addNewPizza({ id: 8 ,name: "AllMeat", price: 10.00 });
+addNewPizza({ id: 9 ,name: "Mexcican", price: 8.00 });
+addNewPizza({ id: 10 ,name: "Vegetarian", price: 4.00 });
 
 placeOrder("AllMeat");
 completeOrder(1);
