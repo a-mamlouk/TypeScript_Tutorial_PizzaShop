@@ -1,4 +1,4 @@
-type pizza = {
+type Pizza = {
   id: number
   name: string,
   price: number;
@@ -10,7 +10,7 @@ type pizza = {
 */
 type Order = {
   id: number;
-  pizza: pizza;
+  pizza: Pizza;
   status: "ordered" | "completed";
 };
 
@@ -20,27 +20,28 @@ type Order = {
     It should have "id" , "pizza" and "status" properties
     Look through the code f ou need a reminder as to what data types those should be
 */
-
-const menu: pizza[] = [
-  { id:1, name: "Sicilan", price: 6.00 },
-  { id:2, name: "Margherita", price: 2.50 },
-  { id:3, name: "Hawaiian", price: 7.00 },
-  { id:4, name: "Quatro formaggi", price: 7.50 },
-  { id:5, name: "Maltese", price: 7.50 },
-  { id:6, name: "Frutti di mare", price: 9.50 },
-  { id:7, name: "Tunez", price: 10.00 }
-];
-
 let cashInRegister = 100;
 let nextOrderId = 1;
+let nextPizzaId= 1;
 const orderQueue: Order[] = [];
+const menu: Pizza[] = [
+  { id:nextPizzaId++, name: "Sicilan", price: 6.00 },
+  { id:nextPizzaId++, name: "Margherita", price: 2.50 },
+  { id:nextPizzaId++, name: "Hawaiian", price: 7.00 },
+  { id:nextPizzaId++, name: "Quatro formaggi", price: 7.50 },
+  { id:nextPizzaId++, name: "Maltese", price: 7.50 },
+  { id:nextPizzaId++, name: "Frutti di mare", price: 9.50 },
+  { id:nextPizzaId++, name: "Tunez", price: 10.00 }
+];
+
 
 /*
   challenge 1 : 
   Add a utility function to add a new pizza to the menu
 */
 
-function addNewPizza(pizzaObj: pizza) {
+function addNewPizza(pizzaObj: Pizza) {
+  pizzaObj.id = nextPizzaId++;
   menu.push(pizzaObj);
 }
 
@@ -54,7 +55,7 @@ function addNewPizza(pizzaObj: pizza) {
   4. returns the new order object (just in case we need it later)
 */
 
-function placeOrder(pizzaName: string) {
+function placeOrder(pizzaName: string) : Order | undefined{
   const selectedpizza = menu.find(pizzaObj => pizzaObj.name === pizzaName);
   // if the pizza is not available in the menu then return an error message
   //  i could ve used if (selectedpizza === undefined) but i prefer to use the below
@@ -90,7 +91,7 @@ write another utility function, completeOrder, that takes an orderId as a parame
     1. fix the warning below by handling the sad path scenario
 */
 
-function completeOrder(orderId: number) {
+function completeOrder(orderId: number) : Order | undefined{
   const order = orderQueue.find(order => order.id === orderId);
   if (!order) {
     console.error(`${orderId} was not found in the order queue`);
@@ -111,7 +112,7 @@ function completeOrder(orderId: number) {
   to either be a string or a number.
 */
 
-export function  getpizzaDetail (identifier: string |number){
+export function  getpizzaDetail (identifier: string |number): Pizza | undefined{
   /*
     challenge 11 : write tge to check if the arameter is a string 
     or a number and use the menu.find() method accordinly
@@ -125,11 +126,14 @@ export function  getpizzaDetail (identifier: string |number){
   else{
     throw new TypeError (" Parameter `identifier` must be either a string or a number")
   }
+  /*
+  retrurn a return type
+  */
 }
 
-addNewPizza({ id: 8 ,name: "AllMeat", price: 10.00 });
-addNewPizza({ id: 9 ,name: "Mexcican", price: 8.00 });
-addNewPizza({ id: 10 ,name: "Vegetarian", price: 4.00 });
+addNewPizza({ id: nextPizzaId++ ,name: "AllMeat", price: 10.00 });
+addNewPizza({ id: nextPizzaId++ ,name: "Mexcican", price: 8.00 });
+addNewPizza({ id: nextPizzaId++ ,name: "Vegetarian", price: 4.00 });
 
 placeOrder("AllMeat");
 completeOrder(1);
