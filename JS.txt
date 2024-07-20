@@ -1,6 +1,6 @@
 Original JS SCRIPT to debbug
 
-const Menu = [
+const menu = [
   {name : "Margherita" , price : 2.50},
   {name : "Sicilan" , price : 6.00},
   {name : "Hawaiian" , price : 7.00},
@@ -18,8 +18,8 @@ const OrderQueue = [];
   Add a utility function to add a new pizza to the menu
 */
 
-function AddNewPizza(PizzaObj) {
-  Menu.push(PizzaObj); 
+function addNewPizza(pizzaObj) {
+  menu.push(pizzaObj); 
 }
 
 /*
@@ -28,16 +28,16 @@ function AddNewPizza(PizzaObj) {
   1. finds that pizza object in the menu,
   2. adds the income to the cashInRegister,
   3. pushes a new "order object” to the orderQueue
-  (e.g. { pizza: selectedPizzaObjectFromStepl, status: "ordered" }) 
+  (e.g. { pizza: selectedpizzaObjectFromStepl, status: "ordered" }) 
   4. returns the new order object (just in case we need it later)
 */
 const NextOrderId = 1;
-function PlaceOrder(PizzaName) {
-  const SelectedPizza = Menu.find(PizzaObj => PizzaObj.name === PizzaName)
-  CashInRegister += SelectedPizza.price
+function PlaceOrder(pizzaName) {
+  const Selectedpizza = menu.find(pizzaObj => pizzaObj.name === pizzaName)
+  CashInRegister += Selectedpizza.price
   const NewOrder = {
     Id: NextOrderId++,
-    Pizza: SelectedPizza,
+    pizza: Selectedpizza,
     status: "Ordered"
   }
   OrderQueue.push(NewOrder)
@@ -64,14 +64,14 @@ function CompleteOrder(OrderId) {
 
 }
 
-AddNewPizza({name : "AllMeat" , price : 10.00})
-AddNewPizza({name : "Mexcican" , price : 8.00})
-AddNewPizza({ name: "Vegetarian", price: 4.00 })
+addNewPizza({name : "AllMeat" , price : 10.00})
+addNewPizza({name : "Mexcican" , price : 8.00})
+addNewPizza({ name: "Vegetarian", price: 4.00 })
 
 PlaceOrder("AllMeat")
 CompleteOrder("1")
 
-console.log("Menu", Menu)
+console.log("menu", menu)
 console.log("Cash in the register", CashInRegister)
 console.log("Order Queue", OrderQueue)
 

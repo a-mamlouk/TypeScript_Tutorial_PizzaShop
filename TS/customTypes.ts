@@ -1,5 +1,5 @@
 type Food = string;
-let favoriteFood: Food = "Pizza";
+let favoriteFood: Food = "pizza";
 
 /*
   challenge :

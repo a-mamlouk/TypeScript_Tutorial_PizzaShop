@@ -1,4 +1,4 @@
-type Pizza = {
+type pizza = {
   id: number
   name: string,
   price: number;
@@ -10,7 +10,7 @@ type Pizza = {
 */
 type Order = {
   id: number;
-  pizza: Pizza;
+  pizza: pizza;
   status: "ordered" | "completed";
 };
 
@@ -21,7 +21,7 @@ type Order = {
     Look through the code f ou need a reminder as to what data types those should be
 */
 
-const Menu: Pizza[] = [
+const menu: pizza[] = [
   { id:1, name: "Sicilan", price: 6.00 },
   { id:2, name: "Margherita", price: 2.50 },
   { id:3, name: "Hawaiian", price: 7.00 },
@@ -40,8 +40,8 @@ const orderQueue: Order[] = [];
   Add a utility function to add a new pizza to the menu
 */
 
-function addNewPizza(pizzaObj: Pizza) {
-  Menu.push(pizzaObj);
+function addNewPizza(pizzaObj: pizza) {
+  menu.push(pizzaObj);
 }
 
 /*
@@ -50,22 +50,22 @@ function addNewPizza(pizzaObj: Pizza) {
   1. finds that pizza object in the menu,
   2. adds the income to the cashInRegister,
   3. pushes a new "order object” to the orderQueue
-  (e.g. { pizza: selectedPizzaObjectFromStepl, status: "ordered" }) 
+  (e.g. { pizza: selectedpizzaObjectFromStepl, status: "ordered" }) 
   4. returns the new order object (just in case we need it later)
 */
 
 function placeOrder(pizzaName: string) {
-  const selectedPizza = Menu.find(pizzaObj => pizzaObj.name === pizzaName);
+  const selectedpizza = menu.find(pizzaObj => pizzaObj.name === pizzaName);
   // if the pizza is not available in the menu then return an error message
-  //  i could ve used if (selectedPizza === undefined) but i prefer to use the below
-  if (!selectedPizza) {
+  //  i could ve used if (selectedpizza === undefined) but i prefer to use the below
+  if (!selectedpizza) {
     console.error(`${pizzaName} is not available in the menu`);
     return;
   }
-  cashInRegister += selectedPizza.price;
+  cashInRegister += selectedpizza.price;
   const newOrder: Order= {
     id: nextOrderId++,
-    pizza: selectedPizza,
+    pizza: selectedpizza,
     status: "ordered"
   };
   orderQueue.push(newOrder);
@@ -100,6 +100,32 @@ function completeOrder(orderId: number) {
   return order;
 
 }
+/*
+  Challenge 10: create a new utility function called getpizzaDetail. It will take
+  a parameter called ‘identifier’, but there's a twist: we want this identifier
+  to be allowed to either be the string name of the pizza (e.g. "Pepperoni",
+  OR to be the number ID of the pizza (e.g. 2).
+
+  Don't worry about the code inside the function yet, just create the function
+  signature, making sure to teach TS that the ‘identifier’ parameter is allowed
+  to either be a string or a number.
+*/
+
+export function  getpizzaDetail (identifier: string |number){
+  /*
+    challenge 11 : write tge to check if the arameter is a string 
+    or a number and use the menu.find() method accordinly
+  */
+  if (typeof identifier === "string"){
+    return menu.find(pizza => pizza.name.toLocaleLowerCase() === identifier.toLocaleLowerCase())
+  }
+  else  if (typeof identifier === "number"){
+    return menu.find(pizza => pizza.id === identifier)
+  }
+  else{
+    throw new TypeError (" Parameter `identifier` must be either a string or a number")
+  }
+}
 
 addNewPizza({ id: 8 ,name: "AllMeat", price: 10.00 });
 addNewPizza({ id: 9 ,name: "Mexcican", price: 8.00 });
@@ -108,13 +134,13 @@ addNewPizza({ id: 10 ,name: "Vegetarian", price: 4.00 });
 placeOrder("AllMeat");
 completeOrder(1);
 
-console.log("Menu", Menu);
+console.log("menu", menu);
 console.log("Cash in the register", cashInRegister);
 console.log("Order Queue", orderQueue)
 
 /*
   Challenge 4
-  1. Create a Pizza object type :
+  1. Create a pizza object type :
     it should include name and a price property
 */
 
